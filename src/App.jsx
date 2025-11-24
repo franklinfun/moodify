@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 import WelcomeScreen from './components/WelcomeScreen'
 import PermissionScreen from './components/PermissionScreen'
+import AISetupScreen from './components/AISetupScreen'
 import GuidanceScreen from './components/GuidanceScreen'
+import Dashboard from './components/Dashboard'
+import DataVaultScreen from './components/DataVaultScreen'
 import './App.css'
 
 function App() {
-  const [screen, setScreen] = useState('welcome') // 'welcome', 'permission', 'guidance', 'complete'
+  const [screen, setScreen] = useState('welcome') // 'welcome', 'permission', 'ai-setup', 'guidance', 'complete', 'dashboard', 'data-vault'
   const [permissions, setPermissions] = useState(null)
 
   const handleGetStarted = () => {
@@ -18,17 +21,25 @@ function App() {
     setScreen('permission')
   }
 
-  const handlePermissionContinue = (selectedPermissions) => {
+  const handlePermissionContinue = (selectedPermissions, permissionResults) => {
     setPermissions(selectedPermissions)
-    setScreen('guidance')
+    // Store permission results for later use
+    if (permissionResults) {
+      console.log('Permission results:', permissionResults)
+    }
+    setScreen('ai-setup')
   }
 
   const handlePermissionBack = () => {
     setScreen('welcome')
   }
 
+  const handleAISetupComplete = () => {
+    setScreen('guidance')
+  }
+
   const handleGuidanceComplete = () => {
-    setScreen('complete')
+    setScreen('dashboard')
   }
 
   return (
@@ -45,8 +56,20 @@ function App() {
           onBack={handlePermissionBack}
         />
       )}
+      {screen === 'ai-setup' && (
+        <AISetupScreen onComplete={handleAISetupComplete} />
+      )}
       {screen === 'guidance' && (
         <GuidanceScreen onComplete={handleGuidanceComplete} />
+      )}
+      {screen === 'dashboard' && (
+        <Dashboard onNavigateToVault={() => setScreen('data-vault')} />
+      )}
+      {screen === 'data-vault' && (
+        <DataVaultScreen 
+          permissions={permissions}
+          onBack={() => setScreen('dashboard')}
+        />
       )}
       {screen === 'complete' && (
         <div className="complete-screen">
