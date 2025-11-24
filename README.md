@@ -1,5 +1,7 @@
 # One Universe - React Application
 
+🌐 **Live Website**: [https://moodify-k94ckkp9p-franklinfuns-projects.vercel.app](https://moodify-k94ckkp9p-franklinfuns-projects.vercel.app)
+
 A modern, futuristic React application featuring beautiful onboarding screens, AI-powered dashboard, and comprehensive data management with a trustworthy, clear design.
 
 ## 🌌 Overview
